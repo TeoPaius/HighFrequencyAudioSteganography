@@ -1,0 +1,18 @@
+purpose + approach
+
+dsp + meaning terminology
+wav + description
+rsa + approach
+frequency + wave compositions
+spectogram
+frequency coding ( unnoticeable in dft over whole track)
+use of wave spliting
+detection of coded frequency only in local context (local context detection)
+
+low pass filter
+noise filtering
+
+compared with lsb and phase coding(possible implementation)
+
+instruments - audacity python numpy
+

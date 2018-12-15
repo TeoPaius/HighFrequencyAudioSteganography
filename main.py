@@ -1,4 +1,10 @@
 import wave, struct, math
+from tkinter import *
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
+
 
 # sampleRate = 48000.0 # hertz
 # duration = 1.0       # seconds
@@ -63,7 +69,7 @@ temp = []
 for i in rt:
     cnt+=1
     value = i
-    noise = int(32767.0 / 2 * math.cos(2 * frequency * math.pi * float(cnt) / float(waveOrg.getframerate())))
+    noise = int(200 * math.sin(2 * frequency * math.pi * float(cnt) / float(waveOrg.getframerate())))
     # print(str(value[0]+1) + ' ' + str(value[1]+1))
     res = [0,0]
     if(noise < 0):
