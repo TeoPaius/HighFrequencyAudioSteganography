@@ -15,7 +15,7 @@ outputFilePath = "../output/guitarNew.wav"
 
 # sampleRate = 48000.0 # hertz
 # duration = 1.0       # seconds
-frequency = 20000  # hertz
+frequency = 15000  # hertz
 # frequency2 = 500
 
 # wavef = wave.open('sound.wav','w')
@@ -60,18 +60,22 @@ temp = []
 
 frames = []
 
+amplitude = 0.5
+
+
 for i in rt:
     cnt+=1
     value = i
-    noise = int(200 * math.sin(2 * frequency * math.pi * float(cnt) / float(params.framerate)))
-    # print(str(value[0]+1) + ' ' + str(value[1]+1))
+    noise = amplitude * math.sin(2 * frequency * math.pi * float(cnt) / float(params.framerate))
+    # print("VALUE: " + str(value[0]) + ' ' + str(value[1]))
+    # print("NOISE: " + str(noise))
     res = [0,0]
     if(noise < 0):
-        res[0] = max(-32767.0, value[0] + noise)
-        res[1] = max(-32767.0, value[1] + noise)
+        res[0] = max(-1, value[0] + noise)
+        res[1] = max(-1, value[1] + noise)
     else:
-        res[0] = min(32767.0, value[0] + noise)
-        res[1] = min(32767.0, value[1] + noise)
+        res[0] = min(1, value[0] + noise)
+        res[1] = min(1, value[1] + noise)
 
     frames.append(res)
 
