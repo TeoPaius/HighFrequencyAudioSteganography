@@ -7,7 +7,7 @@ from myMath import myWave
 
 def timeToFrequency(samples, sRate, timeLen):
     Fs = sRate # sampling rate
-    Ts = timeLen / Fs  # sampling interval
+    Ts = 1 / Fs  # sampling interval
 
     t = np.arange(0, timeLen, Ts)  # time vector
 
@@ -39,5 +39,5 @@ def timeToFrequency(samples, sRate, timeLen):
     return (frq, abs(Y))
 
 
-y = myWave.generateSineWave(48000,3,0.5,10000)
+y = myWave.generateSineWave(48000,3,0.5,20000)
 timeToFrequency(y,48000,3)

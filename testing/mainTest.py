@@ -7,12 +7,12 @@ from matplotlib.figure import Figure
 from fileIO.fileIO import read_whole, write_whole
 
 # matplotlib.use("TkAgg")
-
+from myMath.myWave import generateSineWave
 
 inputFilePath = "../input/guitar.wav"
 outputFilePath = "../output/guitarNew.wav"
 sampleRate = 48000.0 # hertz
-duration = 10       # seconds
+duration = 2       # seconds
 frequency = 20000  # hertz
 
 # frequency2 = 500
@@ -62,19 +62,22 @@ frames = []
 amplitude = 0.5
 
 
+noise = generateSineWave(params.framerate,10,0.5,frequency)
+
+
 for i in rt:
     cnt+=1
     value = i
-    noise = amplitude * math.sin(2 * frequency * math.pi * float(cnt) / float(params.framerate))
+    noiseFrame = 0 if cnt >= len(noise) else noise[cnt]
     # print("VALUE: " + str(value[0]) + ' ' + str(value[1]))
     # print("NOISE: " + str(noise))
     res = [0,0]
-    if(noise < 0):
-        res[0] = max(-1, value[0] + noise)
-        res[1] = max(-1, value[1] + noise)
+    if(noiseFrame < 0):
+        res[0] = max(-1, value[0] + noiseFrame)
+        res[1] = max(-1, value[1] + noiseFrame)
     else:
-        res[0] = min(1, value[0] + noise)
-        res[1] = min(1, value[1] + noise)
+        res[0] = min(1, value[0] + noiseFrame)
+        res[1] = min(1, value[1] + noiseFrame)
 
     frames.append(res)
 
