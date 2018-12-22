@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from myMath import myWave
 from scipy.fftpack import fft as fftScy
 
-refAmplitude = 0.1
+refAmplitude = 0.00001
 
 def timeToFrequency(samples, sRate, timeLen):
     Fs = sRate # sampling rate
@@ -13,7 +13,7 @@ def timeToFrequency(samples, sRate, timeLen):
     t = np.arange(0, timeLen, Ts)  # time vector
 
 
-    n = len(samples)  # length of the signal
+    n = timeLen*sRate  # length of the signal
     k = np.arange(n)
     T = n / Fs
     frq = k / T  # two sides frequency range
@@ -27,10 +27,10 @@ def timeToFrequency(samples, sRate, timeLen):
     ax.append(fig.add_subplot(2, 1, 1))
     ax.append(fig.add_subplot(2, 1, 2))
     fig.set_dpi(100)
-    ax[0].plot(t, samples)
+    ax[0].plot(t, samples[:int(timeLen*sRate)])
     ax[0].set_xlabel('Time')
     ax[0].set_ylabel('Amplitude')
-    ax[1].plot(frq, [max(i, -90) for i in 20*np.log10(Y/refAmplitude)], 'r')  # plotting the spectrum
+    ax[1].plot(frq, [max(i, 0) for i in 20*np.log10(Y/refAmplitude)], 'r')  # plotting the spectrum
     ax[1].set_xlabel('Freq (Hz)')
     ax[1].set_ylabel('dB')
 
