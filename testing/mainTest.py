@@ -1,9 +1,16 @@
+import math
 import wave, struct, myMath
 from tkinter import *
 import matplotlib
-matplotlib.use("TkAgg")
+
+from fileIO.fileIO import read_whole, write_whole
+
+# matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
+
+inputFilePath = "../input/guitar.wav"
+outputFilePath = "../output/guitarNew.wav"
 
 
 # sampleRate = 48000.0 # hertz
@@ -46,42 +53,27 @@ frequency = 20000  # hertz
 #
 # wavef.close()
 
-def read_whole(filename):
-    wav_r = wave.open(filename, 'r')
-    ret = []
-    while wav_r.tell() < wav_r.getnframes():
-        decoded = struct.unpack("<hh", wav_r.readframes(1))
-        ret.append(decoded)
-    return ret
-
-waveOrg = wave.open('guitar.wav','r')
-waveFin = wave.open('guitarNew.wav', 'w')
-
-
-waveFin.setparams(waveOrg.getparams())
-print(waveOrg.getparams())
-
-rt = read_whole('guitar.wav')
+rt, params = read_whole(inputFilePath)
 
 cnt = 0
 temp = []
 
+frames = []
+
 for i in rt:
     cnt+=1
     value = i
-    noise = int(200 * myMath.sin(2 * frequency * myMath.pi * float(cnt) / float(waveOrg.getframerate())))
+    noise = int(200 * math.sin(2 * frequency * math.pi * float(cnt) / float(params.framerate)))
     # print(str(value[0]+1) + ' ' + str(value[1]+1))
     res = [0,0]
     if(noise < 0):
-        res[0] = max(-32000, value[0] + noise)
-        res[1] = max(-32000, value[1] + noise)
+        res[0] = max(-32767.0, value[0] + noise)
+        res[1] = max(-32767.0, value[1] + noise)
     else:
-        res[0] = min(32000, value[0] + noise)
-        res[1] = min(32000, value[1] + noise)
+        res[0] = min(32767.0, value[0] + noise)
+        res[1] = min(32767.0, value[1] + noise)
 
-    data = struct.pack('<hh', res[0], res[1])
-    waveFin.writeframesraw(data)
-waveFin.writeframes(b'')
+    frames.append(res)
 
-
+write_whole(outputFilePath,params, frames)
 

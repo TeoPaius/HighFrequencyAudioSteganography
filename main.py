@@ -46,14 +46,6 @@ frequency = 20000  # hertz
 #
 # wavef.close()
 
-def read_whole(filename):
-    wav_r = wave.open(filename, 'r')
-    ret = []
-    while wav_r.tell() < wav_r.getnframes():
-        decoded = struct.unpack("<hh", wav_r.readframes(1))
-        ret.append(decoded)
-    return ret
-
 waveOrg = wave.open('guitar.wav','r')
 waveFin = wave.open('guitarNew.wav', 'w')
 
