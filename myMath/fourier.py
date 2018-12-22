@@ -2,8 +2,9 @@ import numpy as np
 from tkinter import *
 import matplotlib.pyplot as plt
 from myMath import myWave
+from scipy.fftpack import fft as fftScy
 
-
+refAmplitude = 0.1
 
 def timeToFrequency(samples, sRate, timeLen):
     Fs = sRate # sampling rate
@@ -11,33 +12,45 @@ def timeToFrequency(samples, sRate, timeLen):
 
     t = np.arange(0, timeLen, Ts)  # time vector
 
-    ff = 15000  # frequency of the signal
 
-    n = len(y)  # length of the signal
+    n = len(samples)  # length of the signal
     k = np.arange(n)
     T = n / Fs
     frq = k / T  # two sides frequency range
     frq = frq[range(int(n / 2))]  # one side frequency range
 
-    Y = np.fft.fft(y) / n  # fft computing and normalization
-    Y = Y[range(int(n / 2))]*2
+    Y = np.fft.fft(samples) / n  # fft computing and normalization
+    Y = abs(Y[range(int(n / 2))]*2)
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
     ax = []
     ax.append(fig.add_subplot(2, 1, 1))
     ax.append(fig.add_subplot(2, 1, 2))
     fig.set_dpi(100)
-    ax[0].plot(t, y)
+    ax[0].plot(t, samples)
     ax[0].set_xlabel('Time')
     ax[0].set_ylabel('Amplitude')
-    ax[1].plot(frq, abs(Y), 'r')  # plotting the spectrum
+    ax[1].plot(frq, [max(i, -90) for i in 20*np.log10(Y/refAmplitude)], 'r')  # plotting the spectrum
     ax[1].set_xlabel('Freq (Hz)')
-    ax[1].set_ylabel('|Y(freq)|')
+    ax[1].set_ylabel('dB')
 
     plt.show()
 
     return (frq, abs(Y))
 
 
-y = myWave.generateSineWave(48000,3,0.5,20000)
-timeToFrequency(y,48000,3)
+def timeToFreq(samples, sRate, timeLen):
+    N = len(samples)
+
+    T = 1.0 / sRate
+    x = np.linspace(0.0, N * T, N)
+    y = samples
+    yf = np.fft.fft(y)
+    xf = np.linspace(0.0, 1.0 / (2.0 * T), N // 2)
+    plt.plot(xf, 2.0 / N * np.abs(yf[0:N // 2]))
+    plt.grid()
+    plt.show()
+
+#
+# y = myWave.generateSineWave(48000,3,0.5,10000)
+# timeToFrequency(y,48000,3)

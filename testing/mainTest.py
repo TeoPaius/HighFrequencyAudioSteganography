@@ -7,13 +7,18 @@ from matplotlib.figure import Figure
 from fileIO.fileIO import read_whole, write_whole
 
 # matplotlib.use("TkAgg")
-from myMath.myWave import generateSineWave
+from myMath.fourier import timeToFrequency, timeToFreq
+from myMath.myWave import generateSineWave, addWaves
 
 inputFilePath = "../input/guitar.wav"
 outputFilePath = "../output/guitarNew.wav"
 sampleRate = 48000.0 # hertz
-duration = 2       # seconds
+duration = 5       # seconds
 frequency = 20000  # hertz
+frequency2 = 21000  # hertz
+frequency3 = 22000  # hertz
+noiseLen = 0.01
+startOffset = 1
 
 # frequency2 = 500
 
@@ -57,29 +62,24 @@ rt, params = read_whole(inputFilePath, duration)
 cnt = 0
 temp = []
 
-frames = []
+amplitude = 0.1
 
-amplitude = 0.5
+noise = generateSineWave(params.framerate,noiseLen,amplitude,frequency)
+noise2 = generateSineWave(params.framerate,noiseLen,amplitude,frequency2)
+noise3 = generateSineWave(params.framerate,noiseLen,amplitude,frequency3)
+
+# timeToFrequency(rt,params.framerate,duration)
+
+frames = addWaves(rt, noise, startOffset * params.framerate)
+frames = addWaves(frames, noise2,(startOffset + noiseLen)*params.framerate)
+frames = addWaves(frames, noise3,(startOffset + 2*noiseLen)*params.framerate)
+
+timeToFrequency([i[0] for i in frames],params.framerate,duration)
+# timeToFrequency([i[0] for i in noise3],params.framerate,noiseLen)
 
 
-noise = generateSineWave(params.framerate,10,0.5,frequency)
-
-
-for i in rt:
-    cnt+=1
-    value = i
-    noiseFrame = 0 if cnt >= len(noise) else noise[cnt]
-    # print("VALUE: " + str(value[0]) + ' ' + str(value[1]))
-    # print("NOISE: " + str(noise))
-    res = [0,0]
-    if(noiseFrame < 0):
-        res[0] = max(-1, value[0] + noiseFrame)
-        res[1] = max(-1, value[1] + noiseFrame)
-    else:
-        res[0] = min(1, value[0] + noiseFrame)
-        res[1] = min(1, value[1] + noiseFrame)
-
-    frames.append(res)
+# frames = addWaves(noise, noise2, 0, 1)
+# timeToFreq([i[0] for i in frames],params.framerate,noiseLen)
 
 write_whole(outputFilePath,params, frames)
 
