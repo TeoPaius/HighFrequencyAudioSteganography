@@ -2,20 +2,19 @@ import math
 import wave, struct, myMath
 from tkinter import *
 import matplotlib
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
 from fileIO.fileIO import read_whole, write_whole
 
 # matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from matplotlib.figure import Figure
+
 
 inputFilePath = "../input/guitar.wav"
 outputFilePath = "../output/guitarNew.wav"
+sampleRate = 48000.0 # hertz
+duration = 10       # seconds
+frequency = 20000  # hertz
 
-
-# sampleRate = 48000.0 # hertz
-# duration = 1.0       # seconds
-frequency = 15000  # hertz
 # frequency2 = 500
 
 # wavef = wave.open('sound.wav','w')
@@ -53,7 +52,7 @@ frequency = 15000  # hertz
 #
 # wavef.close()
 
-rt, params = read_whole(inputFilePath)
+rt, params = read_whole(inputFilePath, duration)
 
 cnt = 0
 temp = []

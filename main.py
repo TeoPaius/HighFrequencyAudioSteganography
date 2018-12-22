@@ -50,6 +50,7 @@ waveOrg = wave.open('guitar.wav','r')
 waveFin = wave.open('guitarNew.wav', 'w')
 
 
+
 waveFin.setparams(waveOrg.getparams())
 print(waveOrg.getparams())
 
