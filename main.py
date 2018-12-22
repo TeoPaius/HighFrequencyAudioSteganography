@@ -1,4 +1,4 @@
-import wave, struct, math
+import wave, struct, myMath
 from tkinter import *
 import matplotlib
 matplotlib.use("TkAgg")
@@ -10,22 +10,22 @@ from matplotlib.figure import Figure
 # duration = 1.0       # seconds
 frequency = 20000  # hertz
 # frequency2 = 500
-#
+
 # wavef = wave.open('sound.wav','w')
 # wavef.setnchannels(1) # mono
 # wavef.setsampwidth(2)
 # wavef.setframerate(sampleRate)
 #
 # for i in range(int(duration * sampleRate)):
-#     value = int(32767.0/2*math.cos(2*frequency*math.pi*float(i)/float(sampleRate)))
-#     value2 = int(32767.0/2*math.cos(2*frequency2*math.pi*float(i)/float(sampleRate)))
+#     value = int(32767.0/2*myMath.cos(2*frequency*myMath.pi*float(i)/float(sampleRate)))
+#     value2 = int(32767.0/2*myMath.cos(2*frequency2*myMath.pi*float(i)/float(sampleRate)))
 #     data = struct.pack('<h', value + value2)
 #     data2 = struct.pack('<h', value2)
 #     wavef.writeframesraw(data)
 #
 #
 # for i in range(int(duration * sampleRate)):
-#     value = int(32767.0/2*math.cos(2*frequency*math.pi*float(i)/float(sampleRate)))
+#     value = int(32767.0/2*myMath.cos(2*frequency*myMath.pi*float(i)/float(sampleRate)))
 #
 #     data = struct.pack('<h', value)
 #
@@ -34,7 +34,7 @@ frequency = 20000  # hertz
 #
 # for i in range(int(duration * sampleRate)):
 #
-#     value2 = int(32767.0/2*math.cos(2*frequency2*math.pi*float(i)/float(sampleRate)))
+#     value2 = int(32767.0/2*myMath.cos(2*frequency2*myMath.pi*float(i)/float(sampleRate)))
 #
 #     data2 = struct.pack('<h', value2)
 #
@@ -46,16 +46,9 @@ frequency = 20000  # hertz
 #
 # wavef.close()
 
-def read_whole(filename):
-    wav_r = wave.open(filename, 'r')
-    ret = []
-    while wav_r.tell() < wav_r.getnframes():
-        decoded = struct.unpack("<hh", wav_r.readframes(1))
-        ret.append(decoded)
-    return ret
-
 waveOrg = wave.open('guitar.wav','r')
 waveFin = wave.open('guitarNew.wav', 'w')
+
 
 
 waveFin.setparams(waveOrg.getparams())
@@ -69,7 +62,7 @@ temp = []
 for i in rt:
     cnt+=1
     value = i
-    noise = int(200 * math.sin(2 * frequency * math.pi * float(cnt) / float(waveOrg.getframerate())))
+    noise = int(200 * myMath.sin(2 * frequency * myMath.pi * float(cnt) / float(waveOrg.getframerate())))
     # print(str(value[0]+1) + ' ' + str(value[1]+1))
     res = [0,0]
     if(noise < 0):

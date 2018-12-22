@@ -8,6 +8,7 @@ spectogram
 frequency coding ( unnoticeable in dft over whole track)
 use of wave spliting
 detection of coded frequency only in local context (local context detection)
+nyquist freq
 
 low pass filter
 noise filtering
