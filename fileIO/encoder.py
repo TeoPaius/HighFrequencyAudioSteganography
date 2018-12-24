@@ -23,8 +23,7 @@ def chunks(array, chuckSize):
 
 def bitsToFrequency(bitArray):
     chunksSize = int(np.log2(freqGranularity))
-    freqInterval = int((endFreqCodingRange - startFreqCodingRange) / freqGranularity)
-
+    assert(np.power(2,chunksSize) == freqGranularity )
 
     for chunk in chunks(bitArray, chunksSize):
         nr = 0
@@ -32,6 +31,8 @@ def bitsToFrequency(bitArray):
             nr = nr * 2 + bit
         frequency = startFreqCodingRange + freqInterval * nr
         print(str(chunk) + "----" + str(nr) + "-----" + str(frequency))
+        yield frequency
 
 
-print(bitsToFrequency(messageToBits("aab")))
+for i in bitsToFrequency(messageToBits("abaaaa")):
+    pass
