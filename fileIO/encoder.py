@@ -13,4 +13,4 @@ def bitsToMessage(bitArray):
         chars.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
     return ''.join(chars)
 
-print(bitsToMessage(messageToBits("aa")))
+# print(bitsToMessage(messageToBits("aa")))
