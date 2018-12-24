@@ -34,6 +34,7 @@ def timeToFrequency(samples, sRate, timeLen):
     ax[1].set_xlabel('Freq (Hz)')
     ax[1].set_ylabel('dB')
 
+    plt.grid()
     plt.show()
 
     return (frq, abs(Y))

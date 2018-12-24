@@ -15,8 +15,8 @@ outputFilePath = "../output/guitarNew.wav"
 sampleRate = 48000.0 # hertz
 duration = 5     # seconds
 frequency = 20000  # hertz
-frequency2 = 21000  # hertz
-frequency3 = 22000  # hertz
+frequency2 = 20050  # hertz
+frequency3 = 20100  # hertz
 noiseLen = 0.01
 startOffset = 1
 
@@ -37,7 +37,7 @@ frames = addWaves(rt, noise, startOffset * params.framerate)
 frames = addWaves(frames, noise2,(startOffset + noiseLen)*params.framerate)
 frames = addWaves(frames, noise3,(startOffset + 2*noiseLen)*params.framerate)
 
-duration = 0.5
+duration = 0.015
 
 timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int(startOffset*params.framerate+duration*params.framerate)]],params.framerate,duration)
 # timeToFrequency([i[0] for i in frames],params.framerate,duration)
