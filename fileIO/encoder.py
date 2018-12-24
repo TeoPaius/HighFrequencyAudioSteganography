@@ -1,3 +1,7 @@
+from testing.config import *
+import numpy as np
+
+
 def messageToBits(message):
     result = []
     for c in message:
@@ -13,4 +17,21 @@ def bitsToMessage(bitArray):
         chars.append(chr(int(''.join([str(bit) for bit in byte]), 2)))
     return ''.join(chars)
 
-# print(bitsToMessage(messageToBits("aa")))
+def chunks(array, chuckSize):
+    for i in range(0, len(array), chuckSize):
+        yield array[i:i + chuckSize]
+
+def bitsToFrequency(bitArray):
+    chunksSize = int(np.log2(freqGranularity))
+    freqInterval = int((endFreqCodingRange - startFreqCodingRange) / freqGranularity)
+
+
+    for chunk in chunks(bitArray, chunksSize):
+        nr = 0
+        for bit in chunk:
+            nr = nr * 2 + bit
+        frequency = startFreqCodingRange + freqInterval * nr
+        print(str(chunk) + "----" + str(nr) + "-----" + str(frequency))
+
+
+print(bitsToFrequency(messageToBits("aab")))

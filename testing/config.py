@@ -7,5 +7,5 @@ startOffset = 1       # seconds
 startFreqCodingRange = 21000
 endFreqCodingRange = 25000
 scanWindow = noiseLen
-freqGranularity = 16  # power of 2
+freqGranularity = 8  # power of 2
 defaultStegoFileDuration = 5 # seconds
