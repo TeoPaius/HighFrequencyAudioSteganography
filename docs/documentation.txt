@@ -9,9 +9,12 @@ frequency coding ( unnoticeable in dft over whole track)
 use of wave spliting
 detection of coded frequency only in local context (local context detection)
 nyquist freq
+De Bruijn sequence
 
 low pass filter
 noise filtering
+
+
 
 compared with lsb and phase coding(possible implementation)
 
