@@ -40,7 +40,7 @@ frames = addWaves(frames, noise3,(startOffset + 2*noiseLen)*params.framerate)
 duration = scanWindow
 startOffset = 0.95
 duration = 0.15
-timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int(startOffset*params.framerate+duration*params.framerate)]],params.framerate,duration,startOffset)
+timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)]],params.framerate,duration,startOffset)
 # timeToFrequency([i[0] for i in frames],params.framerate,duration)
 # timeToFrequency([i[0] for i in noise3],params.framerate,noiseLen)
 
