@@ -14,9 +14,9 @@ from testing.config import *
 inputFilePath = "../input/guitar.wav"
 outputFilePath = "../output/guitarNew.wav"
 duration = defaultStegoFileDuration     # seconds
-frequency = 20000  # hertz
-frequency2 = 20200  # hertz
-frequency3 = 20500  # hertz
+frequency = 24000  # hertz
+frequency2 = 24250  # hertz
+frequency3 = 24500 # hertz
 
 
 
@@ -38,9 +38,9 @@ frames = addWaves(frames, noise2,(startOffset + noiseLen)*params.framerate)
 frames = addWaves(frames, noise3,(startOffset + 2*noiseLen)*params.framerate)
 
 duration = scanWindow
-startOffset = 0.95
-duration = 0.15
-timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)]],params.framerate,duration,startOffset)
+startOffset = 1.0
+duration = 0.05
+timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)+1]],params.framerate,duration,startOffset)
 # timeToFrequency([i[0] for i in frames],params.framerate,duration)
 # timeToFrequency([i[0] for i in noise3],params.framerate,noiseLen)
 

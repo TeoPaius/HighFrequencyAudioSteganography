@@ -27,31 +27,45 @@ def bitsToFrequency(bitArray):
     assert(np.power(2,chunksSize) == freqGranularity )
 
     for chunk in chunks(bitArray, chunksSize):
+        cnt = 0
         nr = 0
         for bit in chunk:
             nr = nr * 2 + bit
-        frequency = startFreqCodingRange + freqInterval * nr
-        print(str(chunk) + "----" + str(nr) + "-----" + str(frequency))
-        yield frequency
+            cnt+=1
+            if cnt % (chunksSize/subsampleFactor) == 0:
+                frequency = startFreqCodingRange + freqInterval * 16 * nr
+                print(str(chunk) + "----" + str(nr) + "-----" + str(frequency))
+                nr = 0
+                yield frequency
+
+
 
 def frequencyToBits(frequencyArray):
     chunksSize = int(np.log2(freqGranularity))
+    cnt = 0
+    bits = []
     for frequency in frequencyArray:
-        bits = []
-        nr = int((frequency - startFreqCodingRange)/freqInterval)
+        nr = int((frequency - startFreqCodingRange)/(freqInterval*16))
+        buffer = []
         while nr != 0:
-            bits.append(nr%2)
+            buffer.append(nr%2)
             nr = int(nr/2)
-        while len(bits) < chunksSize:
-            bits.append(0)
-        bits.reverse()
-        yield bits
+        while len(buffer) % (chunksSize / 2) != 0:
+            buffer.append(0)
+        buffer.reverse()
+        bits = bits + buffer
+        cnt += 1
+        if cnt % 2 == 0:
+            yield bits
 
 
-
+buffer = []
 for i in bitsToFrequency(messageToBits("abacad")):
-    for j in frequencyToBits([i]):
-        print(j)
-        print(bitsToMessage(j))
+    buffer.append(i)
+    if len(buffer) == 2:
+        for j in frequencyToBits(buffer):
+            print(j)
+            print(bitsToMessage(j))
+        buffer = []
     # print([j for j in frequencyToBits([i])])
     # print(bitsToMessage([j for j in frequencyToBits([i])]))

@@ -32,14 +32,15 @@ def timeToFrequency(samples, sRate, timeLen, offset):
     ax[0].plot(t, samples[:int(timeLen*sRate)])
     ax[0].set_xlabel('Time')
     ax[0].set_ylabel('Amplitude')
-    ax[1].plot(frq, [max(i, 0) for i in 20*np.log10(Y/refAmplitude)], 'r')  # plotting the spectrum
+    freqValues = [max(i, 0) for i in 20*np.log10(Y/refAmplitude)]
+    ax[1].plot(frq, freqValues, 'r')  # plotting the spectrum
     ax[1].set_xlabel('Freq (Hz)')
     ax[1].set_ylabel('dB')
 
     plt.grid()
     plt.show()
 
-    return (frq, abs(Y))
+    return (frq, freqValues)
 
 
 def timeToFreq(samples, sRate, timeLen):
