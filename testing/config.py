@@ -8,6 +8,6 @@ startFreqCodingRange = 21000
 endFreqCodingRange = 25000
 scanWindow = 0.05
 freqGranularity = 256# power of 2
-defaultStegoFileDuration = 2 # seconds
+defaultStegoFileDuration = 5 # seconds
 freqInterval = int((endFreqCodingRange - startFreqCodingRange) / freqGranularity)
 subsampleFactor = 2 #dont change yet

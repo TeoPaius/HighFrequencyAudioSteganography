@@ -56,6 +56,28 @@ def timeToFreq(samples, sRate, timeLen):
     plt.grid()
     plt.show()
 
+def detectFrequencyes(freqDomain, frqValues, targetRange=None):
+    start = -1
+    end = 999999
+    result = []
+    interval = freqDomain[1] - freqDomain[0]
+    for i in range(0, len(freqDomain)):
+        if freqDomain[i] > startFreqCodingRange:
+            start = i - 1
+            break
+    for i in range(int(startFreqCodingRange), int(endFreqCodingRange), int((endFreqCodingRange-startFreqCodingRange) / 16)):
+        approxDown = int(int(i) / interval) * interval
+        approxUp = int(int(i) / interval + 1) * interval
+        if (approxUp + approxDown) / 2 > int(i):
+            approx = approxDown
+        else:
+            approx = approxUp
+        idx = np.where(freqDomain == approx)[0][0]
+        value = frqValues[idx]
+        if value > 60:
+            result.append(i)
+
+    return result
 #
 # y = myWave.generateSineWave(48000,3,0.5,10000)
 # timeToFrequency(y,48000,3)

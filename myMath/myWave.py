@@ -6,6 +6,7 @@ def generateSineWave(sRate, length, amplitude, freq):
     return [[i] for i in wave]
 
 def addWaves(target, source, startPosition):
+    # this needs major improvement
     print("COMBINING WAVES...")
     startPosition = int(startPosition)
     frames = target[0:startPosition]
@@ -23,5 +24,7 @@ def addWaves(target, source, startPosition):
         else:
             res[0] = min(1, value[0] + noiseFrame[0])
             res[1] = min(1, value[0] + noiseFrame[0])
-        frames.append(res)
-    return frames
+        target[i] = res
+
+
+    # return frames
