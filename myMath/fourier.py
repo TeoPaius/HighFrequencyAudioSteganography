@@ -65,7 +65,7 @@ def detectFrequencyes(freqDomain, frqValues, targetRange=None):
         if freqDomain[i] > startFreqCodingRange:
             start = i - 1
             break
-    for i in range(int(startFreqCodingRange), int(endFreqCodingRange), int((endFreqCodingRange-startFreqCodingRange) / 16)):
+    for i in range(int(startFreqCodingRange), int(endFreqCodingRange), freqInterval * 16):
         approxDown = int(int(i) / interval) * interval
         approxUp = int(int(i) / interval + 1) * interval
         if (approxUp + approxDown) / 2 > int(i):
@@ -76,7 +76,7 @@ def detectFrequencyes(freqDomain, frqValues, targetRange=None):
         value = frqValues[idx]
         if value > 60:
             result.append(i)
-
+    print("detected: " + str(result))
     return result
 #
 # y = myWave.generateSineWave(48000,3,0.5,10000)
