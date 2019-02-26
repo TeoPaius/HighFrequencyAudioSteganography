@@ -41,9 +41,10 @@ frames = rt
 duration = scanWindow
 startOffset = 1.0
 duration = 0.05
-frq, db = timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)+1]],params.framerate,duration,startOffset)
+frq, db, _ = timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)+1]],params.framerate,duration,startOffset)
 
-detectFrequencyes(frq, db)
+detectedFrequencies = detectFrequencyes(frq, db)
+print("detected: " + str(detectedFrequencies))
 # timeToFrequency([i[0] for i in frames],params.framerate,duration)
 # timeToFrequency([i[0] for i in noise3],params.framerate,noiseLen)
 

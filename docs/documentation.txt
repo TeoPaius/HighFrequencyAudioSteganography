@@ -21,4 +21,3 @@ compared with lsb and phase coding(possible implementation)
 instruments - audacity python numpy
 
 
-https://link.springer.com/chapter/10.1007%2F978-3-642-18440-6_15

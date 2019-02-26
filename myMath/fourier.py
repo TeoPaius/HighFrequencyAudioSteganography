@@ -37,10 +37,10 @@ def timeToFrequency(samples, sRate, timeLen, offset):
     ax[1].set_xlabel('Freq (Hz)')
     ax[1].set_ylabel('dB')
 
-    plt.grid()
-    plt.show()
+    # plt.grid()
+    # plt.show()
 
-    return (frq, freqValues)
+    return (frq, freqValues, (t, samples[:int(timeLen*sRate)], frq, freqValues))
 
 
 def timeToFreq(samples, sRate, timeLen):
@@ -76,7 +76,6 @@ def detectFrequencyes(freqDomain, frqValues, targetRange=None):
         value = frqValues[idx]
         if value > 60:
             result.append(i)
-    print("detected: " + str(result))
     return result
 #
 # y = myWave.generateSineWave(48000,3,0.5,10000)
