@@ -1,0 +1,13 @@
+inputFilePath = "../input/guitar.wav"
+outputFilePath = "../output/guitarNew.wav"
+sampleRate = 96000.0  # hertz
+noiseLen = 0.01       # seconds
+noiseAmplitude = 0.1
+startOffset = 1       # seconds
+startFreqCodingRange = 21000
+endFreqCodingRange = 25000
+scanWindow = 0.05
+freqGranularity = 256# power of 2
+defaultStegoFileDuration = 5 # seconds
+freqInterval = int((endFreqCodingRange - startFreqCodingRange) / freqGranularity)
+subsampleFactor = 2 #dont change yet
