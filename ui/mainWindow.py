@@ -8,6 +8,7 @@ from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 from tkinter import *
 from tkinter import ttk
+import matplotlib.pyplot as plt
 
 import numpy as np
 
@@ -112,10 +113,8 @@ class MainWindow(Frame):
         self.plot1.clear()
         duration = 3
         inputFilePath = "../input/"+self.ent.get()
-        print(inputFilePath)
         rt, params = read_whole(inputFilePath, duration)
         frames = rt
-        duration = scanWindow
         startOffset = 1
         duration = 0.5
 
@@ -127,6 +126,9 @@ class MainWindow(Frame):
         self.fig.add_subplot(212).plot(fg[2], fg[3])
         self.canvas.draw()
 
+    def __del__(self):
+        plt.close()
+
 
 
 def main():
@@ -136,6 +138,7 @@ def main():
     root.grid_columnconfigure(0, weight=1)
     app = MainWindow(root)
     root.mainloop()
+
 
 
 if __name__ == '__main__':

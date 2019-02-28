@@ -4,6 +4,8 @@ from tkinter import *
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
+
+from controller.logic import encodeMessage, reconstructMessage
 from myMath.fourier import detectFrequencyes
 from fileIO.fileIO import read_whole, write_whole
 
@@ -28,23 +30,27 @@ temp = []
 
 
 
-noise = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency)
-noise2 = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency2)
-noise3 = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency3)
+# noise = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency)
+# noise2 = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency2)
+# noise3 = generateSineWave(params.framerate,noiseLen,noiseAmplitude,frequency3)
 
 # timeToFrequency(rt,params.framerate,duration)
+# addWaves(rt, noise, startOffset * params.framerate)
+# addWaves(rt, noise2,(startOffset + noiseLen)*params.framerate)
+# addWaves(rt, noise3,(startOffset + 2*noiseLen)*params.framerate)
 
-addWaves(rt, noise, startOffset * params.framerate)
-addWaves(rt, noise2,(startOffset + noiseLen)*params.framerate)
-addWaves(rt, noise3,(startOffset + 2*noiseLen)*params.framerate)
-frames = rt
-duration = scanWindow
-startOffset = 1.0
-duration = 0.05
-frq, db, _ = timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)+1]],params.framerate,duration,startOffset)
+message = "versurile bibliei in abi- papuci ggucci"
+frames = encodeMessage(message, rt, params, 0, 0)
+result = reconstructMessage(frames,params)
+print("initial message: "+message)
+print("decode message: " + result[0:-1])
 
-detectedFrequencies = detectFrequencyes(frq, db)
-print("detected: " + str(detectedFrequencies))
+# startOffset = 1.0
+# duration = 0.01
+# frq, db, _ = timeToFrequency([i[0] for i in frames[int(startOffset*params.framerate):int((startOffset+ duration)*params.framerate)+1]],params.framerate,duration,startOffset)
+#
+# detectedFrequencies = detectFrequencyes(frq, db)
+# print("detected: " + str(detectedFrequencies))
 # timeToFrequency([i[0] for i in frames],params.framerate,duration)
 # timeToFrequency([i[0] for i in noise3],params.framerate,noiseLen)
 
