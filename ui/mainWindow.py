@@ -72,6 +72,17 @@ class MainWindow(Frame):
 
         self.load_Button = Button(self.inputFrame, text="Load file", command=self.loadGraph)
         self.load_Button.grid(row=0, rowspan=2, column=1,sticky="nes")
+        self.write_Button = Button(self.inputFrame, text="Write File", command=self.loadGraph)
+        self.write_Button.grid(row=0, rowspan=2, column=2, sticky="nes")
+        self.decode_Button = Button(self.inputFrame, text="Decode File", command=self.loadGraph)
+        self.decode_Button.grid(row=0, rowspan=2, column=3, sticky="nes")
+        self.encode_Button = Button(self.inputFrame, text="Encode File", command=self.loadGraph)
+        self.encode_Button.grid(row=0, rowspan=2, column=4, sticky="nes")
+
+        self.textEntry = ttk.Entry(self.inputFrame)
+        self.textEntry.insert(0, "Input text")
+        self.textEntry.grid(row=0, rowspan=2, column=5,sticky="nesw")
+
 
         self.out = ttk.Entry(self.inputFrame)
         self.out.insert(0, "Output filename")
@@ -79,6 +90,7 @@ class MainWindow(Frame):
         self.ent.grid(row=0, column = 0)
         self.out.grid(row=1, column=0)
         self.inputFrame.grid(row=0, column=0, sticky="nsew")
+        self.inputFrame.grid_columnconfigure(5,weight=1)
         self.mainFrame.grid(row=1, column=0, sticky='nsew')
         self.grid_rowconfigure(0,weight=0)
         self.grid_rowconfigure(1,weight=1)
@@ -122,8 +134,18 @@ class MainWindow(Frame):
             (startOffset + duration) * params.framerate) + 1]], params.framerate, duration, startOffset)
         self.fig.clf()
 
-        self.fig.add_subplot(211).plot(fg[0], fg[1])
-        self.fig.add_subplot(212).plot(fg[2], fg[3])
+
+        ax = []
+        ax.append(self.fig.add_subplot(211))
+        ax[0].plot(fg[0], fg[1])
+        ax.append(self.fig.add_subplot(212))
+        ax[1].plot(fg[2], fg[3])
+
+        ax[0].set_xlabel('Time')
+        ax[0].set_ylabel('Amplitude')
+        ax[1].set_xlabel('Freq (Hz)')
+        ax[1].set_ylabel('dB')
+
         self.canvas.draw()
 
     def __del__(self):
