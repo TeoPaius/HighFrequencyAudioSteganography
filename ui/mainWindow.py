@@ -48,7 +48,8 @@ import numpy as np
 # button.pack(side=tkinter.BOTTOM)
 #
 # tkinter.mainloop()
-from fileIO.fileIO import read_whole
+from controller.logic import encodeMessage, reconstructMessage
+from fileIO.fileIO import read_whole, write_whole
 from myMath.fourier import timeToFrequency
 from testing.config import inputFilePath, scanWindow
 
@@ -72,11 +73,11 @@ class MainWindow(Frame):
 
         self.load_Button = Button(self.inputFrame, text="Load file", command=self.loadGraph)
         self.load_Button.grid(row=0, rowspan=2, column=1,sticky="nes")
-        self.write_Button = Button(self.inputFrame, text="Write File", command=self.loadGraph)
+        self.write_Button = Button(self.inputFrame, text="Write File", command=self.writeFile)
         self.write_Button.grid(row=0, rowspan=2, column=2, sticky="nes")
-        self.decode_Button = Button(self.inputFrame, text="Decode File", command=self.loadGraph)
+        self.decode_Button = Button(self.inputFrame, text="Decode File", command=self.decodeMessage)
         self.decode_Button.grid(row=0, rowspan=2, column=3, sticky="nes")
-        self.encode_Button = Button(self.inputFrame, text="Encode File", command=self.loadGraph)
+        self.encode_Button = Button(self.inputFrame, text="Encode File", command=self.encodeMesage)
         self.encode_Button.grid(row=0, rowspan=2, column=4, sticky="nes")
 
         self.textEntry = ttk.Entry(self.inputFrame)
@@ -113,11 +114,46 @@ class MainWindow(Frame):
         # self.pack(anchor = "nw", fill="both")
 
     def bindEvents(self):
-        self.out.bind("<FocusIn>", lambda event,: {self.out.delete(0, "end")})
+        self.out.bind("<FocusIn>", lambda event,: {self.out.delete(0, "end") if self.out.get() == "Output filename" else False})
         self.out.bind("<FocusOut>", lambda event,: {self.out.insert(0, "Output filename") if self.out.get() == "" else False})
-        self.ent.bind("<FocusIn>", lambda event,: {self.ent.delete(0, "end")})
+        self.ent.bind("<FocusIn>", lambda event,: {self.ent.delete(0, "end")if self.ent.get() == "Input file name" else False})
         self.ent.bind("<FocusOut>", lambda event,: {self.ent.insert(0, "Input filename")if self.ent.get() == "" else False })
 
+
+    def encodeMesage(self):
+        message = self.textEntry.get()
+        self.frames = encodeMessage(message, self.frames, self.params, 0, 0)
+
+        self.plot1.clear()
+        duration = 3
+        startOffset = 1
+        duration = 0.5
+
+        frq, db, fg = timeToFrequency([i[0] for i in self.frames[int(startOffset * self.params.framerate):int(
+            (startOffset + duration) * self.params.framerate) + 1]], self.params.framerate, duration, startOffset)
+        self.fig.clf()
+
+        ax = []
+        ax.append(self.fig.add_subplot(211))
+        ax[0].plot(fg[0], fg[1])
+        ax.append(self.fig.add_subplot(212))
+        ax[1].plot(fg[2], fg[3])
+
+        ax[0].set_xlabel('Time')
+        ax[0].set_ylabel('Amplitude')
+        ax[1].set_xlabel('Freq (Hz)')
+        ax[1].set_ylabel('dB')
+
+        self.canvas.draw()
+
+    def decodeMessage(self):
+        self.textEntry.delete(0,"end")
+        result = reconstructMessage(self.frames, self.params)
+        self.textEntry.insert(0,result)
+
+    def writeFile(self):
+        outputFilePath = "../input/"+self.out.get()
+        write_whole(outputFilePath, self.params, self.frames)
 
     def loadGraph(self):
         print("Loading graph")
@@ -125,13 +161,13 @@ class MainWindow(Frame):
         self.plot1.clear()
         duration = 3
         inputFilePath = "../input/"+self.ent.get()
-        rt, params = read_whole(inputFilePath, duration)
-        frames = rt
+        rt, self.params = read_whole(inputFilePath, duration)
+        self.frames = rt
         startOffset = 1
         duration = 0.5
 
-        frq, db, fg = timeToFrequency([i[0] for i in frames[int(startOffset * params.framerate):int(
-            (startOffset + duration) * params.framerate) + 1]], params.framerate, duration, startOffset)
+        frq, db, fg = timeToFrequency([i[0] for i in self.frames[int(startOffset * self.params.framerate):int(
+            (startOffset + duration) * self.params.framerate) + 1]], self.params.framerate, duration, startOffset)
         self.fig.clf()
 
 

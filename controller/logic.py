@@ -35,4 +35,4 @@ def reconstructMessage(frames, params):
             buffer = []
         currentOffset += duration
 
-    return ''.join(result)
+    return ''.join(result)[0:-1]

@@ -43,7 +43,7 @@ message = "versurile bibliei in abi- papuci ggucci"
 frames = encodeMessage(message, rt, params, 0, 0)
 result = reconstructMessage(frames,params)
 print("initial message: "+message)
-print("decode message: " + result[0:-1])
+print("decode message: " + result)
 
 # startOffset = 1.0
 # duration = 0.01
