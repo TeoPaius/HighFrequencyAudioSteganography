@@ -14,7 +14,6 @@ def timeToFrequency(samples, sRate, timeLen, offset):
 
     t = np.array([i + offset for i in np.arange(0,timeLen, Ts)])  # time vector
 
-
     n = timeLen*sRate  # length of the signal
     k = np.arange(n)
     T = n / Fs
@@ -23,24 +22,24 @@ def timeToFrequency(samples, sRate, timeLen, offset):
 
     Y = np.fft.fft(samples) / n  # fft computing and normalization
     Y = abs(Y[range(int(n / 2))]*2)
-
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
-    ax = []
-    ax.append(fig.add_subplot(2, 1, 1))
-    ax.append(fig.add_subplot(2, 1, 2))
-    fig.set_dpi(100)
-    ax[0].plot(t, samples[:int(timeLen*sRate)])
-    ax[0].set_xlabel('Time')
-    ax[0].set_ylabel('Amplitude')
+    #
+    # fig = plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
+    # ax = []
+    # ax.append(fig.add_subplot(2, 1, 1))
+    # ax.append(fig.add_subplot(2, 1, 2))
+    # fig.set_dpi(100)
+    # ax[0].plot(t, samples[:int(timeLen*sRate)])
+    # ax[0].set_xlabel('Time')
+    # ax[0].set_ylabel('Amplitude')
     freqValues = [max(i, 0) for i in 20*np.log10(Y/refAmplitude)]
-    ax[1].plot(frq, freqValues, 'r')  # plotting the spectrum
-    ax[1].set_xlabel('Freq (Hz)')
-    ax[1].set_ylabel('dB')
+    # ax[1].plot(frq, freqValues, 'r')  # plotting the spectrum
+    # ax[1].set_xlabel('Freq (Hz)')
+    # ax[1].set_ylabel('dB')
 
-    plt.grid()
-    plt.show()
+    # plt.grid()
+    # plt.show()
 
-    return (frq, freqValues)
+    return (frq, freqValues, (t, samples[:int(timeLen*sRate)], frq, freqValues))
 
 
 def timeToFreq(samples, sRate, timeLen):
@@ -74,9 +73,8 @@ def detectFrequencyes(freqDomain, frqValues, targetRange=None):
             approx = approxUp
         idx = np.where(freqDomain == approx)[0][0]
         value = frqValues[idx]
-        if value > 60:
-            result.append(i)
-    print("detected: " + str(result))
+        if value > detectionThreshold:
+            result.append((i,value))
     return result
 #
 # y = myWave.generateSineWave(48000,3,0.5,10000)

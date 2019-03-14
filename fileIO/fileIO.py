@@ -17,6 +17,7 @@ def read_whole(filename, duration=-1):
     while wav_r.tell() < nrFrames:
         decoded = struct.unpack("<hh", wav_r.readframes(1))
         ret.append([i/normalizationFactor for i in decoded])
+    print("DONE READING FILE")
     return ret, wav_r.getparams()
 
 def write_whole(filename,params,frames):
@@ -28,4 +29,5 @@ def write_whole(filename,params,frames):
         data = struct.pack('<hh', int(i[0]*normalizationFactor), int(i[1]*normalizationFactor))
         waveFin.writeframesraw(data)
     waveFin.writeframes(b'')
+    print("DONE WRITING FILE...")
 

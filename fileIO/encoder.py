@@ -50,7 +50,7 @@ def frequencyToBits(frequencyArray):
         while nr != 0:
             buffer.append(nr%2)
             nr = int(nr/2)
-        while len(buffer) % (chunksSize / 2) != 0:
+        while len(buffer) % (chunksSize / 2) != 0 or len(buffer) == 0:
             buffer.append(0)
         buffer.reverse()
         bits = bits + buffer
@@ -60,12 +60,12 @@ def frequencyToBits(frequencyArray):
 
 
 buffer = []
-for i in bitsToFrequency(messageToBits("abacad")):
-    buffer.append(i)
-    if len(buffer) == 2:
-        for j in frequencyToBits(buffer):
-            print(j)
-            print(bitsToMessage(j))
-        buffer = []
-    # print([j for j in frequencyToBits([i])])
-    # print(bitsToMessage([j for j in frequencyToBits([i])]))
+# for i in bitsToFrequency(messageToBits("abacad")):
+#     buffer.append(i)
+#     if len(buffer) == 2:
+#         for j in frequencyToBits(buffer):
+#             print(j)
+#             print(bitsToMessage(j))
+#         buffer = []
+#     # print([j for j in frequencyToBits([i])])
+#     # print(bitsToMessage([j for j in frequencyToBits([i])]))

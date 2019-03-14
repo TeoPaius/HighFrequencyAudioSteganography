@@ -1,0 +1,16 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Theoretical background}{2}% 
+\contentsline {section}{\numberline {1.1}Overview of steganography}{2}% 
+\contentsline {section}{\numberline {1.2}Overview of digital signal processing}{2}% 
+\contentsline {section}{\numberline {1.3}Just a little bit of anatomy}{3}% 
+\contentsline {chapter}{\numberline {2}The application}{4}% 
+\contentsline {section}{\numberline {2.1}Chosen method}{4}% 
+\contentsline {section}{\numberline {2.2}Limitations}{4}% 
+\contentsline {subsection}{\numberline {2.2.1}Hardware limitations}{4}% 
+\contentsline {subsection}{\numberline {2.2.2}Software limitations}{4}% 
+\contentsline {section}{\numberline {2.3}Further improvements}{4}% 
+\contentsline {chapter}{\numberline {3}Comparison with existent methods}{5}% 
+\contentsline {section}{\numberline {3.1}Other techniques}{5}% 
+\contentsline {subsection}{\numberline {3.1.1}LSB \emph {(least significant byte}) method}{5}% 
+\contentsline {subsection}{\numberline {3.1.2}Phase coding}{5}% 
+\contentsline {section}{\numberline {3.2}Advantages/disadvantages}{5}% 
