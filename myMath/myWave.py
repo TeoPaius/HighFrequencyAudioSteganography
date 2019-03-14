@@ -15,6 +15,8 @@ def addWaves(target, source, startPosition):
         cnt += 1
         value = target[i]
         noiseFrame = [0,0] if cnt >= len(source) else source[cnt]
+        if cnt > len(source):
+            break
         # print("VALUE: " + str(value[0]) + ' ' + str(value[1]))
         # print("NOISE: " + str(noise))
         res = [0,0]
