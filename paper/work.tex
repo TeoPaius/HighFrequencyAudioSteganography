@@ -49,6 +49,13 @@ The commonly stated range of human hearing is 20 Hz to 20 kHz. Under ideal labor
 The word steganography comes from the greek language being derived from the two greek words \emph{steganos}(covered) and \emph{graphein}(to write) referring to the art of enabling communication that uses methods of hiding information in plain sight. In the field of computer science steganography is the practice of concealing a file, message, image, or video within another file, message, image, or video.
 The advantage of steganography over cryptography alone is that the intended secret message does not attract attention to itself as an object of scrutiny. Plainly visible encrypted messages, no matter how unbreakable they are, arouse interest and may in themselves be incriminating in countries in which encryption is illegal.\cite{note4}
 
+\begin{figure}[!h]
+\centering
+\includegraphics[width=1\textwidth]{steganography}
+\caption{General classification of steganographic methods}
+\label{fig:steganography}
+\end{figure}
+
 The process of detecting certain messages hidden inside a stego-object (image, sound, video, etc.) is called steganalysis. The goal of steganalysis is to identify suspected packages, determine whether or not they have a payload encoded into them, and, if possible, recover that payload. 
 Unlike cryptanalysis, in which intercepted data contains a message (though that message is encrypted), steganalysis generally starts with a pile of suspect data files, but little information about which of the files, if any, contain a payload. The steganalyst is usually something of a forensic statistician, and must start by reducing this set of data files (which is often quite large; in many cases, it may be the entire set of files on a computer) to the subset most likely to have been altered.
 
@@ -72,15 +79,6 @@ In this method we are interested just in the first two properties: frequency and
 \subsection{DSP(Digital sound processing)}
 To be able to analyze an analog(continous) signal in a digital environment, it must firstly be converted using and analog-to-digital converter. This process is composed of 2 major stages: discretization and quantization. This would transform a continous signal in a set of consecutive frames equidistant in time, and characterized by a certain amplitude. This also know as time domain. It is used to better visualize the overall image of a sound described as a wave. In (fig \ref{fig:samp_rate}) we can observe the discretization of a sinusoidal wave.
 
-Another domain that is of significant importance to us is the frequency domain. Usually to change the time domain into frequency domain, a Fourier transform is applied over the discrete samples of the sound. This process converts the time domain samples into frequencies and amplitudes (fig \ref{fig:fourier}).
-
-\begin{center}
-\begin{math}
-F\left(\zeta \right)\:=\:\int _{-\infty }^{\infty }\:f\left(x\right)e^{-2\pi x\zeta }
-\end{math}
-\end{center}
-
-
 \begin{figure}
 \centering
 \includegraphics[width=1\textwidth]{sampling_rate}
@@ -88,12 +86,30 @@ F\left(\zeta \right)\:=\:\int _{-\infty }^{\infty }\:f\left(x\right)e^{-2\pi x\z
 \label{fig:samp_rate}
 \end{figure}
 
-\begin{figure}
+Another domain that is of significant importance to us is the frequency domain. Usually to change the time domain into frequency domain, a Fourier transform is applied over the discrete samples of the sound. This process converts the time domain samples into frequencies and amplitudes (fig \ref{fig:fourier}).
+
+\begin{center}
+\begin{math}
+F\left(\zeta \right)\:=\:\int _{-\infty }^{\infty }\:f\left(x\right)e^{-2\pi x\zeta }dx
+\end{math}
+\end{center}
+
+When the independent variable x represents time, the transform variable  represents frequency (e.g. if time is measured in seconds, then frequency is in hertz). Under suitable conditions, f is determined via the inverse transform: 
+\begin{center}
+\begin{math}
+F\left(\zeta \right)\:=\:\int _{-\infty }^{\infty }\:f\left(x\right)e^{-2\pi x\zeta } d\zeta
+\end{math}
+\end{center}
+\begin{figure}[!h]
 \centering
 \includegraphics[width=1\textwidth]{fourier}
 \caption{Fourier transform applied over a sound}
 \label{fig:fourier}
 \end{figure}
+This way a sound can be reconstructed exactly by reversing the tranformation, main using the Fourier inverse transform, to change a set o frequencies to the original sound from with they apperared. Also any change performed over the frequency domain will carry on to the time domain. Using serval techniques such as low pass filter or highpass filter, certain ranges of frequencies could be attenuated, this being used mainly to smooth the sound and to clear any noise that could appear during transmission.
+
+
+
 
 
 The \emph{Nyquist–Shannon} sampling theorem states that a signal can be exactly reconstructed from its samples if the sampling frequency is greater than twice the highest frequency component in the signal. In practice, the sampling frequency is often significantly higher than twice the Nyquist frequency\cite{note5}. In this case, where the target range is about 20-26 khz, a sampling  rate of 48000 samples/second is almost at the limit, meaning that some higher frequencies might be omitted and loss of accuracy, so a higher sampling rate was chosen: 96000 samples/second.
@@ -101,9 +117,6 @@ The \emph{Nyquist–Shannon} sampling theorem states that a signal can be exactl
 
 \section{Just a little bit of anatomy}
 A basic measure of hearing is afforded by an audiogram (fig \ref{fig:human_hearing}), a graph of the absolute threshold of hearing (minimum discernible sound level) at various frequencies throughout an organism's nominal hearing range. The commonly stated range of human hearing is 20 Hz to 20 kHz.Under ideal laboratory conditions, humans can hear sound as low as 12 Hz and as high as 28 kHz, though the threshold increases sharply at 15 kHz in adults. Humans are most sensitive to (i.e. able to discern at lowest intensity) frequencies between 2,000 and 5,000 Hz. Individual hearing range varies according to the general condition of a human's ears and nervous system. The range shrinks during life, usually beginning at around age of eight with the upper frequency limit being reduced. Women typically experience a lesser degree of hearing loss than men, with a later onset. Men have approximately 5 to 10 dB greater loss in the upper frequencies by age 40\cite{note6}.
-This practical application of this work will focus on the range of 15-24 kHz with variable  sound amplitude as a program doesn't need a very high signal amplitude to recognize it. Preferably the lower end of the encoding range should be as high as possible to exclude the possibility of certain humans hearing the noise added, but due to hardware limitations this threshold shouldn't pass 24-25 kHz (to be further discussed in this paper).
-
-As the range of human hearing is variable from one person to another, there exists the possiblity of some persons hearing certain anomalies at the lower end of the frequency specter used in this method, but the application features a mechanism to prevent such detections by raisign the overall height of the frequencies used.
 
 \begin{figure}[h]
 \centering
@@ -112,12 +125,32 @@ As the range of human hearing is variable from one person to another, there exis
 \label{fig:human_hearing}
 \end{figure}
 
+This practical application of this work will focus on the range of 15-24 kHz with variable  sound amplitude as a program doesn't need a very high signal amplitude to recognize it. Preferably the lower end of the encoding range should be as high as possible to exclude the possibility of certain humans hearing the noise added, but due to hardware limitations this threshold shouldn't pass 24-25 kHz (to be further discussed in this paper).
+
+
+As the range of human hearing is variable from one person to another, there exists the possiblity of some persons hearing certain anomalies at the lower end of the frequency specter used in this method, but the application features a mechanism to prevent such detections by raisign the overall height of the frequencies used.
+
 \chapter{The application}
 For proving the concept of hiding information using high frequency signals, an python application was implemented
 \section{Chosen method}
+The gereral method consists in several modules each specialized in certain tasks. The aim of the application is to generate sinusoidal wave noise and to insert it inside a carrier file, and after that to be able to extract the information using the fourier transform applied on well defined segments of the sound to get the data from the time domain to the frequency domain where it can be analised to find if it contains hidden data. By repeating this process on the entire file the message could be recreated with accuracy as long as the sound hasnt been corrupted in the meantime with other high frequency noises.
 \section{Environment}
+The application consists in a desktop application developed in Python, some aditional support scripts developed in Matlab to test the accuracy of the results. For testing purposes an application called Audacity. As for graphical user interface, it was chosen a simple approach using Tkinter.
 \subsection{File encoding formats}
+The ideea behind this method works for any kind of audio format as long as new frequencies can be artificially injected into them. Several audio encoding formats war taken into consideration for this implementation: WAV, MP3 or  
 \subsubsection{WAV format}
+Due to the simplitude of this format and its representation, WAV was chosen to be the type of the carrier sound for the messages encoded using this method.
+The WAV format, also know as WAVE(fig \ref{fig:wave}), was developed by Microsoft and Ibm and it represented the standard for storing audio data on PCs. It is the main way of storing on windows data in raw format and typically uncompressed audio files. As a result of this is the rather large size of files stored this way.
+
+This type of format stores chunked data, a file consisting in several different sized chunks. Each chunk has a fixed sized header which describes the properties and the format of the data stored in the coresponding chunk such as number of channels, byte rate or sample rate. The rest of the chunk represent actual information regarding the amplitude of the stored samples. This allows for an easy way of "inserting" artificial noise inside a sound file on a certain channel as long as the previous properties are respected.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{wave}
+\caption{WAV format}
+\label{fig:wave}
+\end{figure}
+
 \subsection{Python programming language}
 \subsection{Matlab and matplotlib integrtion in python}
 \subsection{Numpy}
