@@ -1,0 +1,22 @@
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces General classification of steganographic methods\relax }}{6}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Continous signal splitted in discrete samples\relax }}{8}% 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Fourier transform applied over a sound\relax }}{8}% 
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Human hearing audiograms based on age\cite {note7} MUST CHANGE BAD!!\relax }}{10}% 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces General flow of the method\relax }}{12}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The usual audio jack connector\relax }}{13}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces WAV format\relax }}{15}% 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Tkinter\relax }}{16}% 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Proposed data representation\relax }}{18}% 
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Noise generation method\relax }}{19}% 
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Reconstruction\relax }}{21}% 
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Hillclimbing\relax }}{22}% 
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Data loss\relax }}{24}% 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces LSB\relax }}{27}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Phase coding\relax }}{28}% 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Examples of assistants\relax }}{30}% 
